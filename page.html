@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI</title>
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/CCE0CEEC-3720-B742-8AF3-9C3624AD745B/main.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="C:\Users\zoy63\Desktop\jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="C:\Users\zoy63\Desktop\jquery-ui-1.12.1.custom\jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
+    <style type="text/css">
+        #draggable {font-size: 0.5cm; background-image: url(1.png) ; width:90px; height: 90px;
+            text-align: center;vertical-align: text-bottom;  padding:10px}
+        #draggable1 {font-size: 0.5cm; background-image: url(1.png) ; width:90px; height: 90px;
+            text-align: center;vertical-align: text-bottom;  padding:10px}
+        #draggable2 {font-size: 0.5cm; background-image: url(1.png) ; width:90px; height: 90px;
+            text-align: center;vertical-align: text-bottom;  padding:10px}
+        #droppable {font-size: 0.5cm; background-image: url(2.png) ; width:90px; height: 90px;
+            text-align: center;vertical-align: text-bottom;  padding:10px}
+        #droppable1 {font-size: 0.5cm; background-image: url(2.png) ; width:90px; height: 90px;
+            text-align: center;vertical-align: text-bottom;  padding:10px}
+        .text {font-size: 0.5cm;  padding:10px; padding-top: 100px }
+        div:hover {
+            z-index: 999
+        }
+    </style>
+    <script type="text/javascript">
+        function name31(name1, name2){//меняет имя между 3 и 1 файлом
+
+            $('#draggable .text').text(name1)
+            $('#draggable2 .text').text(name2)
+
+        };
+        function name21(name1, name2){
+
+            $('#draggable .text').text(name1)
+            $('#draggable1 .text').text(name2)
+
+        };
+        function name32(name1, name2){
+
+            $('#draggable1 .text').text(name1)
+            $('#draggable2 .text').text(name2)
+
+        };
+
+        //начинает работу при захвате одного из файлов
+        //indexOfElement - какой из файлов был взят
+        //в зависимости от того, над каким файлом опустили, с  тем и обменяется именем
+        //если опустили над файлом, то вернется назад
+        //если кинуть в месте отличном от файл/папка ничего не изменится
+        function change(indexOfElement) {
+            let tmp=$('#draggable2').text();
+            let tmp1=$('#draggable').text();
+            let tmp2=$('#draggable1').text();
+            var y2,x2, y1,x1,y0,x0;
+            $("#draggable1").offset(function(i,val){
+                y1=val.left;
+                x1=val.top;
+                return {top:val.top , left:val.left};
+            });
+            $("#draggable2").offset(function(i,val){
+                y2=val.left;
+                x2=val.top;
+                return {top:val.top , left:val.left};
+            });
+            $("#draggable").offset(function(i,val){
+                y0=val.left;
+                x0=val.top;
+                return {top:val.top , left:val.left};
+            });
+
+
+
+            if(indexOfElement==2)
+            {
+
+                $('#draggable2').mouseup(
+                    function(){
+                        if(event.pageX>=280&&event.pageX<=370&&event.pageY>=20&&event.pageY<=120)
+                        {
+                            name31(tmp, tmp1);
+                            $("#draggable2").offset(function(){
+                                return {top:x2 , left:y2};
+                            });
+
+                        }
+                    }
+                );
+                $('#draggable2').mouseup(
+                    function(){
+                        if(event.pageX>=370&&event.pageX<=450&&event.pageY>=20&&event.pageY<=120)
+                        {
+                            name32(tmp, tmp2);
+                            $("#draggable2").offset(function(){
+                                return {top:x2 , left:y2};
+                            });
+                        }
+                    }
+                );
+            };
+            if(indexOfElement==1)
+            {
+
+                $('#draggable1').mouseup(
+                    function(){
+                        if(event.pageX>=280&&event.pageX<=370&&event.pageY>=20&&event.pageY<=120)
+                        {
+                            name21(tmp2, tmp1);
+                            $("#draggable1").offset(function(){
+                                return {top:x1 , left:y1};
+                            });
+                        }
+                    }
+                );
+                $('#draggable1').mouseup(
+                    function(){
+                        if(event.pageX>=480&&event.pageX<=560&&event.pageY>=20&&event.pageY<=120)
+                        {
+                            name32(tmp, tmp2);
+                            $("#draggable1").offset(function(){
+                                return {top:x1 , left:y1};
+                            });
+
+                        }
+                    }
+                );
+            };
+            if(indexOfElement==0)
+            {
+
+                $('#draggable').mouseup(
+                    function(){
+                        if(event.pageX>=370&&event.pageX<=450&&event.pageY>=20&&event.pageY<=120)
+                        {
+                            name21(tmp2, tmp1);
+                            $("#draggable").offset(function(){
+                                return {top:x0 , left:y0};
+                            });
+                        }
+                    }
+                );
+                $('#draggable').mouseup(
+                    function(){
+                        if(event.pageX>=480&&event.pageX<=560&&event.pageY>=20&&event.pageY<=120)
+                        {
+                            name31(tmp, tmp1);
+                            $("#draggable").offset(function(){
+                                return {top:x0, left:y0};
+                            });
+                        }
+                    }
+                );
+            };
+
+
+
+        };
+
+        $(function() {
+
+            $('#draggable').draggable( );
+            $('#draggable1').draggable( );
+            $('#draggable2').draggable();
+            $('#droppable').droppable({
+                var:i=0,
+                drop: function() {
+                    i=i+1
+                    $('#droppable .text').text("папка("+ i +")"),
+                    $('#draggable').draggable({
+                         stop: function() {
+                             $('#draggable').hide()
+                         }
+                    } );
+                    $('#draggable1 ').draggable({
+                        stop: function() {
+                            $('#draggable1').hide()
+                        }
+                    } );
+                    $('#draggable2').draggable({
+                        stop: function() {
+                            $('#draggable2').hide()
+                        }
+                    } );
+
+                }
+
+
+          });
+            $('#droppable1').droppable({
+                var:j=0,
+                drop: function() {
+                    j=j+1
+                    $('#droppable1 .text').text("папка("+j+")"),
+                        $('#draggable').draggable({
+                            stop: function() {
+                                $('#draggable').hide()
+                            }
+                        } );
+                    $('#draggable1').draggable({
+                        stop: function() {
+                            $('#draggable1').hide()
+                        }
+                    } );
+                    $('#draggable2').draggable({
+                        stop: function() {
+                            $('#draggable2').hide()
+                        }
+                    } );
+                },
+
+
+
+
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <div id="droppable" >
+               <div class="text" > папка (0)</div>
+            </div>
+        </td>
+        <td>
+            <div id="droppable1" >
+                <div class="text"> папка (0)</div>
+            </div>
+        </td>
+        <td>
+            <div  id="draggable" onmousedown="change(0)" >
+                <div class="text"> файл1</div>
+            </div>
+        </td>
+        <td>
+            <div id="draggable1" onmousedown="change(1)" >
+                <div class="text"> файл2</div>
+            </div>
+        </td>
+        <td>
+            <div id="draggable2" onmousedown="change(2)" >
+                <div class="text"> файл3</div>
+            </div>
+        </td>
+
+    </tr>
+</table>
+
+</body>
+</html>
